@@ -1,5 +1,5 @@
 // Linked List Implementation
-export class ListNode {
+class ListNode {
   value: number;
   next: ListNode | null;
 
@@ -9,7 +9,7 @@ export class ListNode {
   }
 }
 
-export class LinkedList {
+class LinkedList {
   head: ListNode | null;
 
   constructor() {
@@ -18,23 +18,57 @@ export class LinkedList {
 
   // EASY: Append a value to the end of the list
   append(value: number): void {
-    // TODO: Implement append method
+    if (!this.head) {
+      this.head = new ListNode(value);
+      return;
+    }
+
+    let node = this.head;
+    while (node.next) {
+      node = node.next;
+    }
+    node.next = new ListNode(value);
   }
 
   // EASY: Find a value in the list
   find(value: number): boolean {
-    // TODO: Implement find method
+    let node = this.head;
+    while (node && node.next !== null) {
+      node = node.next;
+      if (node.value === value) {
+        return true;
+      }
+    }
     return false;
   }
 
   // MEDIUM: Reverse the linked list
   reverse(): void {
-    // TODO: Implement reverse method
+    let prev: ListNode | null = null;
+    let current: ListNode | null = this.head;
+
+    while (current) {
+      const nextNode = current.next;
+      current.next = prev;
+      prev = current;
+      current = nextNode;
+    }
+    this.head = prev;
   }
 
   // MEDIUM: Remove a node by value
   remove(value: number): void {
-    // TODO: Implement remove method
+    while (this.head !== null && this.head.value === value) {
+      this.head = this.head.next;
+    }
+    let node = this.head;
+    while (node && node.next !== null) {
+      if (node.next.value === value) {
+        node.next = node.next.next;
+      } else {
+        node = node.next;
+      }
+    }
   }
 }
 
